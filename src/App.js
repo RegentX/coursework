@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
 import './App.css';
-import Header from './header/header';
+import Header from './header/main/header';
 import Note from './body/notes/note';
 import NoteForm from './body/note_form/note_form';
-import { Provider, useDispatch, useSelector } from 'react-redux';
-import store, { ADD_ARTICLE, ADD_ARCHIVE } from './store';
+import { fetchCryptoData } from './store/cruptoSlice';
+import RunningHeader from './header/low/runningTitle';
+import { useSelector, useDispatch } from 'react-redux';
+import { ADD_ARTICLE, ADD_ARCHIVE } from './store/store';
+import React, { useEffect } from 'react';
 
 function App() {
 
@@ -19,6 +21,12 @@ function App() {
   const handleAddArchive = (newArchive) => {
     dispatch({ type: ADD_ARCHIVE, payload: newArchive });
   }
+
+  const cryptos = useSelector(state => state.crypto.data);
+
+  useEffect(() => {
+    dispatch(fetchCryptoData());
+  }, [dispatch]);
 
   // const [articles, setArticles] = useState([]);
 
@@ -40,6 +48,9 @@ function App() {
         {
       <div>
       <Header />
+          <div>
+            <RunningHeader cryptos={cryptos} />
+          </div>
       <div className="main-wrap">
         <div className="left-panel">
           <Note articles={articles} addArchive={handleAddArchive} archives={archives}/>

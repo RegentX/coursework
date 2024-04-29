@@ -1,7 +1,7 @@
 import './note.css';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteArticle } from '../../store';
+import { deleteArticle } from '../../store/store';
 
 function Note({articles, addArchive, archives}) {
     console.log(articles);
