@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { from } from 'rxjs';
+import { interval } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
 // export const fetchCryptoData = createAsyncThunk('crypto/fetchData', () => {
@@ -14,8 +15,9 @@ import { switchMap, map } from 'rxjs/operators';
 // });
 
 export const fetchCryptoData = createAsyncThunk('crypto/fetchData', () => {
-    return from(fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=5&page=1'))
+    return interval(20000) // emit value every 20 seconds
         .pipe(
+            switchMap(() => from(fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=5&page=1'))),
             switchMap(response => from(response.json())),
             map(data => data)
         ).toPromise();
