@@ -1,9 +1,9 @@
 import './App.css';
-import Header from './header/main/header';
-import Note from './body/notes/note';
-import NoteForm from './body/note_form/note_form';
+import Header from './components/header/main/header';
+import Note from './components/body/notes/note';
+import NoteForm from './components/body/note_form/note_form';
 import { fetchCryptoData } from './store/cruptoSlice';
-import RunningHeader from './header/low/runningTitle';
+import RunningHeader from './components/header/low/runningTitle';
 import { useSelector, useDispatch } from 'react-redux';
 import { ADD_ARTICLE, ADD_ARCHIVE } from './store/store';
 import React, { useEffect } from 'react';
@@ -22,11 +22,11 @@ function App() {
     dispatch({ type: ADD_ARCHIVE, payload: newArchive });
   }
 
-  const cryptos = useSelector(state => state.crypto.data);
+  // const cryptos = useSelector(state => state.crypto.data);
 
-  useEffect(() => {
-    dispatch(fetchCryptoData());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchCryptoData());
+  // }, [dispatch]);
 
   // const [articles, setArticles] = useState([]);
 
@@ -49,14 +49,14 @@ function App() {
       <div>
       <Header />
           <div>
-            <RunningHeader cryptos={cryptos} />
+            <RunningHeader apiUrl="https://api.coincap.io/v2/assets" refreshInterval={10000} />
           </div>
       <div className="main-wrap">
         <div className="left-panel">
           <Note articles={articles} addArchive={handleAddArchive} archives={archives}/>
         </div>
         <div className="right-panel">
-          <NoteForm addArticle={handleAddArticle} archives={archives}/>
+              <NoteForm addArticle={handleAddArticle} archives={archives} apiUrl="https://api.coincap.io/v2/assets" refreshInterval={30000}/>
         </div>
       </div>
       </div>

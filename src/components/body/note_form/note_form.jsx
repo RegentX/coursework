@@ -1,12 +1,13 @@
-// note_form.js
 import './note_form.css';
 import React, { useState } from 'react';
+import CryptoDropdown from '../../utils/cryptoDropdown';
 
-function NoteForm({addArticle, archives}) {
+function NoteForm({ addArticle, archives, apiUrl, refreshInterval }) {
     const [author, setAuthor] = useState('');
     const [header, setHeader] = useState('');
     const [category, setCategory] = useState('');
     const [content, setContent] = useState('');
+    const [selectedCrypto, setSelectedCrypto] = useState('');
     const [articles, setArticles] = useState([]);
 
     const onChangeAuthor = (e) => {
@@ -30,13 +31,20 @@ function NoteForm({addArticle, archives}) {
             author: author,
             header: header,
             category: category,
-            content: content
+            content: content,
+            crypto: selectedCrypto
         };
         addArticle(newArticle); 
         setAuthor('');
         setHeader('');
         setCategory('');
         setContent('');
+        setSelectedCrypto(null);
+    };
+
+    const handleCryptoSelect = (crypto) => { 
+        setSelectedCrypto(crypto);
+        console.log(crypto);
     };
 
 
@@ -79,6 +87,7 @@ function NoteForm({addArticle, archives}) {
                     className='content-input' 
                     rows="5"
                 ></textarea>
+                <CryptoDropdown apiUrl={apiUrl} refreshInterval={refreshInterval} onCryptoSelect={handleCryptoSelect} />
                 <button onClick={handleAddArticle}>Добавить статью</button>
                 <h1 id='head_form_title'>
                     Архив

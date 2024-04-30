@@ -1,7 +1,7 @@
 import './note.css';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteArticle } from '../../store/store';
+import { deleteArticle } from '../../../store/store';
 
 function Note({articles, addArchive, archives}) {
     console.log(articles);
@@ -40,11 +40,12 @@ function Note({articles, addArchive, archives}) {
                     <article key={index}>
                         <div className='atricle-text'>
                             <h1>{article.header}</h1>
+                            {article.crypto && <p className='textOne'><strong>{article.crypto.name} - {article.crypto.priceUsd}</strong></p>}
                             <p className='textOne'>Категория: <strong>{article.category}</strong></p>
                             <p className='textOne'>Автор: <strong>{article.author}</strong></p>
                             <p className='textOne'>{article.content}</p>
                         </div>
-                        
+
                         <div className="buttons">
                             <button onClick={() => handleDelete(index)}>Delete</button>
                             <button onClick={() => handleArchive(index)}>Archive</button>

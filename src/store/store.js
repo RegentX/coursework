@@ -2,14 +2,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import cryptoReducer from './cruptoSlice';
 
-// Define actions
 const ADD_ARTICLE = 'ADD_ARTICLE';
 const ADD_ARCHIVE = 'ADD_ARCHIVE';
 const DELETE_ARTICLE = 'DELETE_ARTICLE';
 
 const deleteArticle = index => ({ type: DELETE_ARTICLE, payload: index });
 
-// Define reducers
 const articlesReducer = (state = [], action) => {
     switch (action.type) {
         case ADD_ARTICLE:
@@ -30,7 +28,6 @@ const archivesReducer = (state = [], action) => {
     }
 };
 
-// Combine reducers and create store
 const rootReducer = combineReducers({
     articles: articlesReducer,
     archives: archivesReducer,
